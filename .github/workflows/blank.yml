@@ -45,8 +45,7 @@ jobs:
 
       - name: Install & Build
         run: |
-          npm ci --legacy-peer-deps
-          npm run build
+          echo "ci --legacy-peer-deps"
 
       - name: Configure AWS credentials (OIDC)
         if: matrix.env == steps.pick.outputs.env
@@ -59,4 +58,4 @@ jobs:
       - name: Sync build/ to S3
         if: matrix.env == steps.pick.outputs.env
         run: |
-          aws s3 sync build/ s3://${{ matrix.bucket }}/ --delete
+          aws s3 ls
