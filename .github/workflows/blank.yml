@@ -55,9 +55,12 @@ jobs:
           aws-region: ${{ matrix.aws_region }}
           role-session-name: gha-${{ github.run_id }}
 
-      - name: Sync build/ to S3
-        if: matrix.env == steps.pick.outputs.env
+      - name: Create S3 bucket
         run: |
-          aws s3 ls
-          aws s3 create-bucket --bucket github-demo2vjha --region us-west-2
-          aws s3 ls
+          BUCKET="demorole2vijayhasaws"
+          REGION="us-west-2"
+          echo "Creating bucket: $BUCKET in region: $REGION"
+          aws s3api create-bucket \
+            --bucket "$BUCKET" \
+            --region "$REGION" \
+            --create-bucket-configuration LocationConstraint=$REGION
