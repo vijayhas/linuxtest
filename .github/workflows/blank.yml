@@ -26,7 +26,7 @@ jobs:
         include:
           - env: dev
             aws_region: us-west-2
-            role_arn: arn:aws:iam::380973361022:role/gitHubDemoRole
+            role_arn: arn:aws:iam::380973361022:role/demorole2
             bucket: github-demo1
             
     steps:
