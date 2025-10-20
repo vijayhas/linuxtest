@@ -1,40 +1,31 @@
-name: Deploy Frontend to S3 + CloudFront (OIDC)
+name: Test GitHub Actions OIDC with AWS
 
 on:
-  workflow_dispatch:
-    inputs:
-      env:
-        description: Target environment
-        required: true
-        default: dev
-        type: choice
-  push:
-    branches: [main]  # adjust if you deploy on push
+  workflow_dispatch:  # manual trigger
 
 jobs:
-  deploy:
+  test-oidc:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write      # REQUIRED for OIDC
-      contents: read
-            
-    steps:
+      id-token: write      # Required for OIDC
+      contents: read       # Required for checkout if used
 
-      - uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Configure AWS credentials (OIDC)
-        if: matrix.env == steps.pick.outputs.env
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::380973361022:role/demorole2
           aws-region: us-west-2
-          role-session-name: gha-9099
 
-      - name: Create S3 bucket
+      - name: Verify AWS identity
         run: |
-          BUCKET="demorole2vijayhasaws1"
-          REGION="us-west-2"
-          echo "Creating bucket: $BUCKET in region: $REGION"
-          aws s3api create-bucket \
-            --bucket "$BUCKET" \
-            --region "$REGION" \
-            --create-bucket-configuration LocationConstraint=$REGION
+          echo "Testing AWS OIDC connection..."
+          aws sts get-caller-identity
+
+      - name: List S3 buckets
+        run: |
+          echo "Listing all S3 buckets (permission test)..."
+          aws s3 ls
