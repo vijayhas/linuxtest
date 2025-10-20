@@ -1,14 +1,15 @@
 name: Test GitHub Actions OIDC with AWS
 
 on:
-  workflow_dispatch:  # manual trigger
+  push:
+    branches: [main]     # 🔹 Triggers automatically when you push to main
 
 jobs:
   test-oidc:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write      # Required for OIDC
-      contents: read       # Required for checkout if used
+      id-token: write      # ✅ Required for OIDC
+      contents: read       # ✅ Needed for checkout
 
     steps:
       - name: Checkout code
