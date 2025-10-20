@@ -18,7 +18,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::380973361022:role/demorole2
-          aws-region: us-west-1
+          aws-region: us-west-2
 
       - name: Verify AWS identity
         run: aws sts get-caller-identity
