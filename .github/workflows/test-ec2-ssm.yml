@@ -37,6 +37,7 @@ jobs:
 
       - name: Fetch SSM command output
         run: |
+          echo "VIJAY HAS - SSM cmmand output"
           CMD_ID="${{ steps.send.outputs.command_id }}"
           for IID in $INSTANCE_IDS; do
             echo "---- $IID ----"
