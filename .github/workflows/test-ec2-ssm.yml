@@ -26,6 +26,7 @@ jobs:
       - name: Send SSM command
         id: send
         run: |
+          echo "Sending SSM command"
           CMD_ID=$(aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --comment "SSM smoke test triggered from GitHub Actions" \
