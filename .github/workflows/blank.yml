@@ -1,8 +1,7 @@
 name: Test GitHub Actions OIDC with AWS
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   test-oidc:
