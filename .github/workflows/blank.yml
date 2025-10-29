@@ -2,6 +2,13 @@ name: Test GitHub Actions OIDC with AWS
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: environment
+        default: 'dev'
+
 
 jobs:
   test-oidc:
